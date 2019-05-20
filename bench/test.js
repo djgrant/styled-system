@@ -12,6 +12,7 @@ const theme = {
   },
 }
 
+/*
 bench({
   tests: [
     {
@@ -34,6 +35,92 @@ bench({
     {
       name: 'next-system',
       func: next.space,
+    },
+  ]
+})
+*/
+
+/*
+bench({
+  tests: [
+    {
+      theme,
+      fontSize: 4,
+      m: 0,
+      mb: 4,
+      // seems to be broken in v4??
+      px: 2,
+      color: 'text',
+      bg: 'primary',
+    }
+  ],
+  libs: [
+    {
+      name: 'styled-system',
+      func: system.compose(
+        system.space,
+        system.color,
+        system.fontSize
+      ),
+    },
+    {
+      name: 'smooth-system',
+      func: smooth.compose(
+        smooth.space,
+        smooth.color,
+        smooth.fontSize
+      )
+    },
+    {
+      name: 'next-system',
+      func: next.compose(
+        next.space,
+        next.color,
+        next.fontSize
+      ),
+    },
+  ]
+})
+*/
+
+bench({
+  tests: [
+    {
+      theme,
+      fontSize: [5, 6],
+      m: 0,
+      mb: 4,
+      px: [ 2, 3 ],
+      py: [ 4, 5 ],
+      color: 'text',
+      bg: 'primary',
+    }
+  ],
+  libs: [
+    {
+      name: 'styled-system',
+      func: system.compose(
+        system.fontSize,
+        system.space,
+        system.color
+      ),
+    },
+    {
+      name: 'smooth-system',
+      func: smooth.compose(
+        smooth.fontSize,
+        smooth.space,
+        smooth.color
+      ),
+    },
+    {
+      name: 'next-system',
+      func: next.core,
+      // func: next.compose(
+      //   next.fontSize,
+      //   next.space,
+      //   next.color
+      // ),
     },
   ]
 })

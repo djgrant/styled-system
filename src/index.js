@@ -71,8 +71,12 @@ export const system = config => {
       defaultScale,
       transform,
     } = conf
+    let allProperties = properties
+    if (!properties.length) {
+      allProperties = [ property || key ]
+    }
     funcs[key] = createStyleFunction(
-      [ property, ...properties ].filter(Boolean),
+      allProperties,
       scale,
       transform,
       defaultScale
@@ -102,6 +106,69 @@ export const system = config => {
 
   return parse
 }
+
+const configs = {}
+configs.space = {
+  margin: { property: 'margin', scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginTop: { property: 'marginTop', scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginRight: { property: 'marginRight', scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginBottom: { property: 'marginBottom', scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginLeft: { property: 'marginLeft', scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginX: { properties: [ 'marginLeft', 'marginRight' ], scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  marginY: { properties: [ 'marginTop', 'marginBottom' ], scale: 'space', defaultScale: defaultSpace, transform: getMargin, },
+  padding: { property: 'padding', scale: 'space', defaultScale: defaultSpace, },
+  paddingTop: { property: 'paddingTop', scale: 'space', defaultScale: defaultSpace, },
+  paddingRight: { property: 'paddingRight', scale: 'space', defaultScale: defaultSpace, },
+  paddingBottom: { property: 'paddingBottom', scale: 'space', defaultScale: defaultSpace, },
+  paddingLeft: { property: 'paddingLeft', scale: 'space', defaultScale: defaultSpace, },
+  paddingX: { properties: [ 'paddingLeft', 'paddingRight' ], scale: 'space', defaultScale: defaultSpace, },
+  paddingY: { properties: [ 'paddingTop', 'paddingBottom' ], scale: 'space', defaultScale: defaultSpace, },
+}
+configs.space.m = configs.space.margin
+configs.space.mt = configs.space.marginTop
+configs.space.mr = configs.space.marginRight
+configs.space.mb = configs.space.marginBottom
+configs.space.ml = configs.space.marginLeft
+configs.space.mx = configs.space.marginX
+configs.space.my = configs.space.marginY
+configs.space.p = configs.space.padding
+configs.space.pt = configs.space.paddingTop
+configs.space.pr = configs.space.paddingRight
+configs.space.pb = configs.space.paddingBottom
+configs.space.pl = configs.space.paddingLeft
+configs.space.px = configs.space.paddingX
+configs.space.py = configs.space.paddingY
+
+configs.color = {
+  color: {
+    property: 'color',
+    scale: 'colors',
+  },
+  backgroundColor: {
+    property: 'backgroundColor',
+    scale: 'colors',
+  },
+}
+configs.color.bg = configs.color.backgroundColor
+
+configs.typography = {
+  fontSize: {
+    scale: 'fontSizes',
+    defaultScale: defaultFontSizes,
+  },
+  fontFamily: {
+    scale: 'fonts',
+  },
+  lineHeight: {
+    scale: 'lineHeights',
+  },
+}
+
+export const core = system({
+  ...configs.space,
+  ...configs.color,
+  ...configs.typography,
+})
 
 // v4 compat
 export const style = ({
