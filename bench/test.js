@@ -12,29 +12,28 @@ const theme = {
   },
 }
 
-const tests = [
-  {
-    theme,
-    m: 0,
-    mb: 4,
-    px: [ 2, 3 ],
-    py: [ 4, 5 ]
-  }
-]
-
-const libs = [
-  {
-    name: 'styled-system',
-    func: system.space,
-  },
-  {
-    name: 'smooth-system',
-    func: smooth.space,
-  },
-  {
-    name: 'next-system',
-    func: next.space,
-  },
-]
-
-bench({ tests, libs })
+bench({
+  tests: [
+    {
+      theme,
+      m: 0,
+      mb: 4,
+      px: [ 2, 3 ],
+      py: [ 4, 5 ]
+    }
+  ],
+  libs: [
+    {
+      name: 'styled-system',
+      func: system.space,
+    },
+    {
+      name: 'smooth-system',
+      func: smooth.space,
+    },
+    {
+      name: 'next-system',
+      func: next.space,
+    },
+  ]
+})
