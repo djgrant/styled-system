@@ -34,22 +34,22 @@ test('returns raw color values', t => {
   t.deepEqual(a, { color: 'inherit', backgroundColor: 'tomato' })
 })
 
-test('backgroundColor prop overrides bg prop', t => {
+test('prop order overrides previous props', t => {
   const a = color({
-    backgroundColor: 'tomato',
     bg: 'blue',
+    backgroundColor: 'tomato',
   })
   t.deepEqual(a, { backgroundColor: 'tomato' })
 })
 
 test('returns a pixel font-size', t => {
   const a = fontSize({ fontSize: 48 })
-  t.deepEqual(a, { fontSize: '48px' })
+  t.deepEqual(a, { fontSize: 48 })
 })
 
 test('uses a default font-size scale', t => {
   const a = fontSize({ fontSize: 2 })
-  t.deepEqual(a, { fontSize: '16px' })
+  t.deepEqual(a, { fontSize: 16 })
 })
 
 test('returns a string font-size', t => {
@@ -64,7 +64,7 @@ test('returns a percentage based width', t => {
 
 test('returns a pixel based width', t => {
   const a = width({ width: 256 })
-  t.deepEqual(a, { width: '256px' })
+  t.deepEqual(a, { width: 256 })
 })
 
 test('returns a string width', t => {
@@ -72,7 +72,7 @@ test('returns a string width', t => {
   t.deepEqual(a, { width: 'auto' })
 })
 
-test('returns an array of style objects', t => {
+test('returns a raw value', t => {
   const styles = space({
     m: '4px',
   })
@@ -86,7 +86,7 @@ test('returns 0 values', t => {
 
 test('returns negative pixel values', t => {
   const styles = space({ m: -2 })
-  t.deepEqual(styles, { margin: '-8px' })
+  t.deepEqual(styles, { margin: -8 })
 })
 
 test('returns negative em values', t => {
@@ -101,7 +101,7 @@ test('returns negative theme values', t => {
     },
     m: -2,
   })
-  t.deepEqual(styles, { margin: '-8px' })
+  t.deepEqual(styles, { margin: -8 })
 })
 
 test('returns positive theme values', t => {
@@ -120,8 +120,8 @@ test('returns responsive values', t => {
   })
   t.deepEqual(styles, {
       margin: 0,
-      '@media screen and (min-width: 40em)': { margin: '8px' },
-      '@media screen and (min-width: 52em)': { margin: '16px' },
+      '@media screen and (min-width: 40em)': { margin: 8 },
+      '@media screen and (min-width: 52em)': { margin: 16 },
   })
 })
 
@@ -129,7 +129,7 @@ test('returns aliased values', t => {
   const styles = space({
     px: 2,
   })
-  t.deepEqual(styles, { paddingLeft: '8px', paddingRight: '8px' })
+  t.deepEqual(styles, { paddingLeft: 8, paddingRight: 8 })
 })
 
 test('returns string values from theme', t => {
@@ -160,12 +160,12 @@ test('returns values from theme object', t => {
     margin: 'sm',
   })
 
-  t.deepEqual(styles, { margin: '1px' })
+  t.deepEqual(styles, { margin: 1 })
 })
 
 test('pl prop sets paddingLeft', t => {
   const styles = space({ pl: 2 })
-  t.deepEqual(styles, { paddingLeft: '8px' })
+  t.deepEqual(styles, { paddingLeft: 8 })
 })
 
 test('pl prop sets paddingLeft 0', t => {
@@ -178,7 +178,7 @@ test('px prop overrides pl prop', t => {
     pl: 1,
     px: 2,
   })
-  t.deepEqual(styles, { paddingLeft: '8px', paddingRight: '8px' })
+  t.deepEqual(styles, { paddingLeft: 8, paddingRight: 8 })
 })
 
 test('py prop overrides pb prop', t => {
@@ -186,7 +186,7 @@ test('py prop overrides pb prop', t => {
     pb: 1,
     py: 2,
   })
-  t.deepEqual(styles, { paddingTop: '8px', paddingBottom: '8px' })
+  t.deepEqual(styles, { paddingTop: 8, paddingBottom: 8 })
 })
 
 test('mx prop overrides mr prop', t => {
@@ -194,7 +194,7 @@ test('mx prop overrides mr prop', t => {
     mr: 1,
     mx: 2,
   })
-  t.deepEqual(styles, { marginLeft: '8px', marginRight: '8px' })
+  t.deepEqual(styles, { marginLeft: 8, marginRight: 8 })
 })
 
 test('my prop overrides mt prop', t => {
@@ -202,7 +202,7 @@ test('my prop overrides mt prop', t => {
     mt: 1,
     my: 2,
   })
-  t.deepEqual(styles, { marginTop: '8px', marginBottom: '8px' })
+  t.deepEqual(styles, { marginTop: 8, marginBottom: 8 })
 })
 
 test('margin overrides m prop', t => {
@@ -210,20 +210,14 @@ test('margin overrides m prop', t => {
     m: 1,
     margin: 2,
   })
-  t.deepEqual(styles, { margin: '8px' })
-})
-
-test('space includes propTypes', t => {
-  const { propTypes } = space
-  t.is(typeof propTypes, 'object')
-  t.is(typeof propTypes.m, 'function')
+  t.deepEqual(styles, { margin: 8 })
 })
 
 test('size returns width and height', t => {
   const styles = size({
     size: 4,
   })
-  t.deepEqual(styles, { width: '4px', height: '4px' })
+  t.deepEqual(styles, { width: 4, height: 4 })
 })
 
 // grid
@@ -235,7 +229,7 @@ test('gridGap returns a scalar style', t => {
     gridGap: 3,
   })
 
-  t.deepEqual(a, { gridGap: '8px' })
+  t.deepEqual(a, { gridGap: 8 })
 })
 
 test('gridGap uses the default scale', t => {
@@ -244,7 +238,7 @@ test('gridGap uses the default scale', t => {
     gridGap: 2,
   })
 
-  t.deepEqual(a, { gridGap: '8px' })
+  t.deepEqual(a, { gridGap: 8 })
 })
 
 test('gridRowGap returns a scalar style', t => {
@@ -255,7 +249,7 @@ test('gridRowGap returns a scalar style', t => {
     gridRowGap: 3,
   })
 
-  t.deepEqual(a, { gridRowGap: '8px' })
+  t.deepEqual(a, { gridRowGap: 8 })
 })
 
 test('gridRowGap uses the default scale', t => {
@@ -264,7 +258,7 @@ test('gridRowGap uses the default scale', t => {
     gridRowGap: 2,
   })
 
-  t.deepEqual(a, { gridRowGap: '8px' })
+  t.deepEqual(a, { gridRowGap: 8 })
 })
 
 test('gridColumnGap returns a scalar style', t => {
@@ -275,7 +269,7 @@ test('gridColumnGap returns a scalar style', t => {
     gridColumnGap: 3,
   })
 
-  t.deepEqual(a, { gridColumnGap: '8px' })
+  t.deepEqual(a, { gridColumnGap: 8 })
 })
 
 test('gridColumnGap uses the default scale', t => {
@@ -284,7 +278,7 @@ test('gridColumnGap uses the default scale', t => {
     gridColumnGap: 2,
   })
 
-  t.deepEqual(a, { gridColumnGap: '8px' })
+  t.deepEqual(a, { gridColumnGap: 8 })
 })
 
 test('textStyle prop returns theme.textStyles object', t => {
