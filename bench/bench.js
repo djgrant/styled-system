@@ -21,7 +21,8 @@ const Benchmark = require('benchmark')
  *  })
  */
 
-module.exports = ({
+module.exports = async ({
+  name,
   tests = [],
   libs = []
 }) => {
@@ -31,17 +32,20 @@ module.exports = ({
   tests.forEach((args, i) => {
     libs.forEach(lib => {
       const run = () => lib.func(args)
-      console.log(lib.name, run())
-      suite.add(`${i}: ${lib.name}`, run)
+      // console.log(lib.name, run())
+      suite.add(`${name} ${i}: ${lib.name}`, run)
     })
   })
 
-  suite
-    .on('cycle', event => {
-      console.log(String(event.target))
-    })
-    .on('complete', function onComplete() {
-      console.log(`Fastest is ${this.filter('fastest').map('name')}`)
-    })
-    .run({ async: true })
+  return new Promise(resolve => {
+    suite
+      .on('cycle', event => {
+        console.log(String(event.target))
+      })
+      .on('complete', function onComplete() {
+        console.log(`Fastest is ${this.filter('fastest').map('name')}`)
+        resolve()
+      })
+      .run({ async: true })
+  })
 }

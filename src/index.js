@@ -38,9 +38,7 @@ const getMediaQueries = breakpoints => [
   ...breakpoints.map(createMediaQuery)
 ]
 
-const getResponsiveStyle = (props, getStyle, scale, values) => {
-  const breakpoints = get(props.theme, 'breakpoints', defaultBreakpoints)
-  const mediaQueries = getMediaQueries(breakpoints)
+const getResponsiveStyle = (mediaQueries, getStyle, scale, values) => {
   let styles = {}
   values.slice(0, mediaQueries.length).forEach((n, i) => {
     const media = mediaQueries[i]
@@ -83,6 +81,7 @@ export const system = config => {
     )
   })
 
+  const cache = {}
   const parse = props => {
     let styles = {}
     for (const key in props) {
@@ -91,8 +90,14 @@ export const system = config => {
       const raw = props[key]
       const scale = get(props.theme, getStyle.scale, getStyle.defaultScale || {})
       if (Array.isArray(raw)) {
+        const breakpoints = cache.breakpoints || get(props.theme, 'breakpoints', defaultBreakpoints)
+        const mediaQueries = cache.mediaQueries || getMediaQueries(breakpoints)
+        if (!cache.breakpoints) {
+          cache.breakpoints = breakpoints
+          cache.mediaQueries = mediaQueries
+        }
         assign(styles, getResponsiveStyle(
-          props, getStyle, scale, raw
+          mediaQueries, getStyle, scale, raw
         ))
         continue
       }
@@ -103,6 +108,7 @@ export const system = config => {
 
   parse.config = config
   parse.keys = keys
+  parse.cache = cache
 
   return parse
 }
