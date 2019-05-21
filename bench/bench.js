@@ -32,7 +32,7 @@ module.exports = async ({
   tests.forEach((args, i) => {
     libs.forEach(lib => {
       const run = () => lib.func(args)
-      // console.log(lib.name, run())
+      console.log(lib.name, run())
       suite.add(`${name} ${i}: ${lib.name}`, run)
     })
   })

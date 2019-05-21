@@ -170,10 +170,57 @@ configs.typography = {
   },
 }
 
+configs.layout = {
+  display: {},
+  width: { scale: 'sizes' },
+  minWidth: { scale: 'sizes' },
+  maxWidth: { scale: 'sizes' },
+  height: { scale: 'sizes' },
+  minHeight: { scale: 'sizes' },
+  maxHeight: { scale: 'sizes' },
+  size: { properties: [ 'width', 'height' ], scale: 'sizes' },
+  verticalAlign: {},
+}
+
+configs.flexbox = {
+  alignItems: {},
+  justifyContent: {},
+  flexWrap: {},
+  flexDirection: {},
+  flex: {},
+  alignContent: {},
+  justifyItems: {},
+  justifySelf: {},
+  alignSelf: {},
+  order: {},
+  flexBasis: {},
+}
+
+configs.borders = {
+  border: { scale: 'borders' },
+  borderTop: { scale: 'borders' },
+  borderRight: { scale: 'borders' },
+  borderBottom: { scale: 'borders' },
+  borderLeft: { scale: 'borders' },
+  borderWidth: { scale: 'borderWidths' },
+  borderStyle: { scale: 'borderStyles' },
+  borderColor: { scale: 'colors' },
+  borderRadius: { scale: 'radii' },
+}
+
 export const core = system({
   ...configs.space,
   ...configs.color,
   ...configs.typography,
+})
+
+export const all = system({
+  ...configs.space,
+  ...configs.color,
+  ...configs.typography,
+  ...configs.layout,
+  ...configs.flexbox,
+  ...configs.borders,
 })
 
 // v4 compat

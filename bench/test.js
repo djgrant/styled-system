@@ -1,7 +1,7 @@
 const bench = require('./bench')
 const system = require('styled-system')
 const smooth = require('smooth-system')
-const next = require('..')
+const next = require('next-system')
 
 const theme = {
   space: [ 0, 4, 8, 16, 32, 64, 128 ],
@@ -116,6 +116,56 @@ const run = async () => {
       {
         name: 'next-system',
         func: next.core,
+      },
+    ]
+  })
+
+  await bench({
+    name: 'all',
+    tests: [
+      {
+        theme,
+        fontSize: [5, 6],
+        m: 0,
+        mb: 4,
+        px: [ 2, 3 ],
+        py: [ 4, 5 ],
+        color: 'text',
+        bg: 'primary',
+        display: 'flex',
+        flexDirection: 'column',
+        width: 768,
+        border: '1px solid gold',
+      }
+    ],
+    libs: [
+      {
+        name: 'styled-system',
+        func: system.compose(
+          system.fontSize,
+          system.space,
+          system.display,
+          system.flexDirection,
+          system.width,
+          system.borders,
+          system.color
+        ),
+      },
+      {
+        name: 'smooth-system',
+        func: smooth.compose(
+          smooth.fontSize,
+          smooth.space,
+          smooth.display,
+          smooth.flexDirection,
+          smooth.width,
+          smooth.borders,
+          smooth.color
+        ),
+      },
+      {
+        name: 'next-system',
+        func: next.all,
       },
     ]
   })

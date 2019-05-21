@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "benchmark": "^2.1.4",
+    "next-system": "file:..",
     "smooth-system": "github:neoziro/styled-system#smooth-system-2",
     "styled-system": "^4.2.2"
   }
