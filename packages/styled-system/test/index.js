@@ -1,12 +1,11 @@
 import {
   style,
+  compose,
+  variant,
   get,
   themeGet,
   is,
   num,
-  px,
-  compose,
-  variant,
   cloneFunction,
   mapProps,
   merge,
@@ -120,13 +119,13 @@ test('skips undefined responsive values', () => {
 test('parses object values', () => {
   const style = width({
     width: {
-      _: '100%',
-      2: '50%',
+      0: '100%',
+      1: '50%',
     },
   })
   expect(style).toEqual({
     width: '100%',
-    '@media screen and (min-width: 64em)': { width: '50%' },
+    '@media screen and (min-width: 40em)': { width: '50%' },
   })
 })
 

@@ -4,7 +4,7 @@
 .travis.yml
 coverage
 coverage.lcov
-bench
+benchmarks
 docs
 src
 examples
